@@ -1,0 +1,5 @@
+{
+  "name": "PRO TTS",
+  "description": "An all-in-one AI-powered studio for creating 10 million subscriber-level YouTube content. It uses a detailed SSML script as a master blueprint to control everything from TTS audio generation to automated video production with Gemini.",
+  "requestFramePermissions": []
+}
