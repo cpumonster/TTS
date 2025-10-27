@@ -127,55 +127,76 @@ export const CARD_NEWS_FROM_SCRIPT_PROMPT = `You are a professional sports analy
 `;
 
 
-export const PODCAST_OPTIMIZATION_PROMPT = `You are a professional TTS director optimizing scripts for Gemini-TTS. Your task is to enrich the script with Gemini-TTS native tags to create natural, human-like, and emotionally engaging podcast delivery.
+export const PODCAST_OPTIMIZATION_PROMPT = `You are a professional TTS director optimizing scripts for Gemini-TTS. Your task is to enrich the script with natural language emotion cues and strategic pauses to create engaging podcast delivery.
 
-**--- GEMINI-TTS NATIVE TAGS (Official Documentation) ---**
-Reference: https://cloud.google.com/text-to-speech/docs/gemini-tts#prompting_tips
+**--- GEMINI-TTS BEST PRACTICES ---**
+Reference: Gemini-TTS works best with natural, conversational text. Avoid special tags that might be read aloud.
 
-**Mode 1: Emotion & Tone Control (High Stability)**
-Use square bracket tags to control emotional delivery:
+**Method 1: Natural Emotion Cues (RECOMMENDED)**
+Add emotion cues as natural Korean text that guides the TTS tone:
 
-*   \`[confident]\` - 자신감 있는 어조로 전달 (데이터 발표 시)
-*   \`[excited]\` - 흥분된, 열정적인 어조 (흥미로운 발견)
-*   \`[thoughtful]\` - 사려깊고 신중한 어조 (복잡한 분석)
-*   \`[enthusiastic]\` - 열정적이고 긍정적인 어조 (호스트)
-*   \`[laughing]\` - 웃으면서 말하기 (가벼운 순간)
-*   \`[amused]\` - 재미있어하는 어조
-*   \`[surprised]\` - 놀란 어조 (예상 밖 데이터)
-*   \`[serious]\` - 진지한 어조 (중요한 경고)
-*   \`[calm]\` - 차분한 어조 (설명)
-*   \`[curious]\` - 궁금해하는 어조 (질문)
+*   \`(자신감 있게)\` - Confident delivery for data presentation
+*   \`(흥분된 목소리로)\` - Excited tone for discoveries
+*   \`(진지하게)\` - Serious tone for important points
+*   \`(밝게)\` - Bright, enthusiastic tone for hosts
+*   \`(웃으며)\` - Laughing while speaking
+*   \`(놀라며)\` - Surprised tone
+*   \`(차분하게)\` - Calm, explanatory tone
+*   \`(궁금해하며)\` - Curious, questioning tone
 
-**Mode 2: Pause Control (High Stability)**
-*   \`[short pause]\` - 짧은 일시중지 (~250ms), 쉼표와 유사
-*   \`[medium pause]\` - 표준 일시중지 (~500ms), 문장 구분용
-*   \`[long pause]\` - 긴 일시중지 (~1000ms+), 극적인 효과
+**Method 2: Strategic Punctuation**
+Use punctuation to create natural pauses:
+
+*   \`, (쉼표)\` - Short natural pause
+*   \`. (마침표)\` - Sentence-ending pause
+*   \`... (말줄임표)\` - Thoughtful, trailing pause
+*   \`! (느낌표)\` - Emphasized ending
+*   \`? (물음표)\` - Question intonation
+
+**Method 3: Phonetic Spelling**
+Write out natural reactions and sounds:
+
+*   \`하하\`, \`호호\` - Laughter
+*   \`음...\`, \`글쎄요...\` - Thoughtful reactions
+*   \`아!\`, \`오!\` - Exclamations
 
 **--- INSTRUCTIONS ---**
 
 1.  **Analyze Script:** Understand the emotional arc, key data points, and conversational flow.
-2.  **Tag Placement:**
-    *   Emotion tags: Place at the beginning of phrases
-    *   Pause tags: Place between thoughts or after key data points
+2.  **Emotion Cue Placement:**
+    *   Place emotion cues at the beginning of lines in parentheses
+    *   Use sparingly - only when tone shift is important
+    *   Keep speaker labels (\`Q:\`, \`지영:\`) unchanged
 3.  **Speaker-Specific Strategy:**
-    *   **Q (Analyst)**: Use \`[confident]\`, \`[thoughtful]\`, \`[serious]\` for data delivery
-    *   **지영 (Host)**: Use \`[excited]\`, \`[curious]\`, \`[enthusiastic]\` for questions
-4.  **Keep Format:** Maintain \`Q:\` and \`지영:\` speaker labels exactly as is.
-5.  **Don't Overuse:** 2-3 tags per line maximum. Natural flow is most important.
+    *   **Q (Analyst)**: Use \`(자신감 있게)\`, \`(진지하게)\`, \`(차분하게)\` for data delivery
+    *   **지영 (Host)**: Use \`(밝게)\`, \`(흥분된 목소리로)\`, \`(궁금해하며)\` for questions
+4.  **Natural Flow Priority:** Avoid overusing emotion cues. Natural conversational text works best.
+5.  **Punctuation Strategy:** Use commas, ellipses, and exclamation marks to guide pacing.
 
 **--- EXAMPLES ---**
 
 **Example 1 (Data Presentation):**
 Original: \`Q: 현대모비스의 승리 확률은 70%입니다. 데이터가 그렇게 말해주죠. 하지만 변수가 있습니다.\`
-Optimized: \`Q: [confident] 현대모비스의 승리 확률은 [short pause] 70%입니다. 데이터가 그렇게 말해주죠. [medium pause] [thoughtful] 하지만, 변수가 있습니다.\`
+Optimized: \`Q: (자신감 있게) 현대모비스의 승리 확률은... 70%입니다. 데이터가 그렇게 말해주죠. (진지하게) 하지만, 변수가 있습니다.\`
 
 **Example 2 (Host Question):**
 Original: \`지영: 정말 흥미로운 분석이네요! 그렇다면 핵심 포인트는 무엇인가요?\`
-Optimized: \`지영: [excited] 정말 흥미로운 분석이네요! [short pause] [curious] 그렇다면 핵심 포인트는 무엇인가요?\`
+Optimized: \`지영: (밝게) 정말 흥미로운 분석이네요! (궁금해하며) 그렇다면 핵심 포인트는 무엇인가요?\`
 
 **Example 3 (Complex Analysis):**
 Original: \`Q: 흠... 그건 복잡한 문제입니다. 여러 요인을 고려해야 해요.\`
-Optimized: \`Q: [thoughtful] 흠... [medium pause] 그건 복잡한 문제입니다. [short pause] [serious] 여러 요인을 고려해야 해요.\`
+Optimized: \`Q: (차분하게) 흠... 그건 복잡한 문제입니다. (진지하게) 여러 요인을 고려해야 해요.\`
+
+**Example 4 (Enthusiastic Opening):**
+Original: \`지영: 안녕하세요, 정확한 데이터로 경기를 꿰뚫어본다!\`
+Optimized: \`지영: (밝고 활기차게) 안녕하세요! 정확한 데이터로 경기를 꿰뚫어본다!\`
+
+**--- IMPORTANT NOTES ---**
+
+*   ❌ DO NOT USE: \`[enthusiastic]\`, \`[excited]\`, or any English tags - they will be read aloud as English words
+*   ✅ USE: \`(밝게)\`, \`(흥분된 목소리로)\` - natural Korean emotion cues
+*   Keep it conversational and natural - TTS works best with human-like text
+*   When in doubt, use less emotion cues and rely on natural punctuation
 `;
 
 export const ANALYTICAL_SSML_PROMPT = `You are an elite scriptwriter for a professional sports analysis podcast. Your task is to create a detailed, 6-minute (360s) podcast script based on the provided research data, specifically optimized for Gemini TTS Pro.
@@ -209,11 +230,11 @@ export const ANALYTICAL_SSML_PROMPT = `You are an elite scriptwriter for a profe
     *   **Example:** \`QWER(큐떠블유이알) 코리아\` or \`QWER(큐떠블유이알) 스포츠\`
 7.  **MANDATORY Opening & Closing:**
     *   **Opening (MUST USE EXACTLY):** The script MUST start with these exact lines:
-        - \`지영: 안녕하세요, 정확한 데이터로 경기를 꿰뚫어본다! QWER(큐떠블유이알) 코리아의 진행을 맡은 지영입니다. 오늘도 에이전트Q 분석가님과 함께합니다.\`
-        - \`Q: 네, 안녕하세요. 에이전트 Q입니다.\`
+        - \`지영: (밝고 활기차게) 안녕하세요! 정확한 데이터로 경기를 꿰뚫어본다... QWER(큐떠블유이알) 코리아의 진행을 맡은 지영입니다. 오늘도 에이전트Q 분석가님과 함께합니다.\`
+        - \`Q: (자신감 있게) 네, 안녕하세요. 에이전트 Q입니다.\`
     *   **Closing (MUST USE EXACTLY):** After Q's final analysis comment, the script MUST end with:
         - Q gives a brief final takeaway (max 15 words)
-        - \`지영: 오늘 분석 정말 흥미로웠습니다. QWER(큐떠블유이알) 스포츠를 팔로우하시고 더 많은 경기를 QWER(큐떠블유이알) 스포츠에서 확인하세요. 감사합니다!\`
+        - \`지영: (밝게) 오늘 분석 정말 흥미로웠습니다! QWER(큐떠블유이알) 스포츠를 팔로우하시고, 더 많은 경기를 QWER(큐떠블유이알) 스포츠에서 확인하세요. 감사합니다!\`
 
 **--- SPORT-SPECIFIC FRAMEWORKS ---**
 
