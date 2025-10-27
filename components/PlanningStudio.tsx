@@ -109,30 +109,49 @@ export const PlanningStudio: React.FC<PlanningStudioProps> = ({ setIsLoading, se
         </button>
       </div>
 
-      {(researchResult || sources.length > 0) && (
-        <div className="mt-8 bg-gray-900/50 p-6 rounded-lg animate-fade-in">
-            <h3 className="text-xl font-semibold mb-4 text-purple-300">Analysis Report</h3>
-            {researchResult && (
-                <div className="bg-gray-800 p-4 rounded-md">
-                   <pre className="whitespace-pre-wrap font-sans text-gray-200">{researchResult}</pre>
-                </div>
-            )}
-            {sources.length > 0 && (
-                <div className="mt-4">
-                    <h4 className="font-semibold text-purple-400 mb-2">Sources (from Google Search)</h4>
-                    <ul className="list-disc list-inside space-y-1 text-sm">
-                        {sources.map((source, index) => (
-                            <li key={index}>
-                                <a href={source.web.uri} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">
-                                    {source.web.title || source.web.uri}
-                                </a>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            )}
+      <div className="mt-8 bg-gray-900/50 p-6 rounded-lg">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-xl font-semibold text-purple-300">2. Research Data (분석 데이터)</h3>
+          <button 
+            onClick={() => {
+              if (researchResult.trim()) {
+                onResearchComplete(researchResult);
+                toast.success('분석 데이터가 저장되었습니다!');
+              } else {
+                toast.warning('저장할 데이터를 입력해주세요.');
+              }
+            }}
+            className="px-4 py-2 font-semibold bg-green-600 rounded-md hover:bg-green-700 transition-colors text-sm flex items-center"
+          >
+            <IconSparkles className="w-4 h-4 mr-2" />
+            Generate Analytical
+          </button>
         </div>
-      )}
+        <p className="text-gray-400 mb-4 text-sm">
+          위에서 분석한 결과가 자동으로 입력됩니다. 또는 직접 분석 데이터를 입력하거나 수정할 수 있습니다.
+        </p>
+        <textarea 
+          value={researchResult}
+          onChange={(e) => setResearchResult(e.target.value)}
+          className="w-full bg-gray-800 border border-gray-600 rounded-md p-4 focus:outline-none focus:ring-2 focus:ring-purple-500 font-sans text-sm text-gray-200"
+          placeholder="1단계에서 분석 결과가 자동으로 입력되거나, 여기에 직접 분석 데이터를 입력하세요..."
+          rows={12}
+        />
+        {sources.length > 0 && (
+          <div className="mt-4">
+            <h4 className="font-semibold text-purple-400 mb-2">Sources (from Google Search)</h4>
+            <ul className="list-disc list-inside space-y-1 text-sm">
+              {sources.map((source, index) => (
+                <li key={index}>
+                  <a href={source.web.uri} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">
+                    {source.web.title || source.web.uri}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
